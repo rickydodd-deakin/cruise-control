@@ -1,0 +1,72 @@
+#IMPORTS
+import time
+
+#CONSTANTS
+THROTTLE_RATE = 2 #creates speed change of 2km/h per second
+CAR_DRAG = 1 #the car will lose 1km/h per second if throttle disengaged
+
+#VARIABLES
+maintainingSpeed = True
+setCCSpeed = 0
+currentVehicleSpeed = 40
+surfaceAngle = 0
+
+
+#FUNCTIONS
+def MaintainSpeed(currentVehicleSpeed, maintainingSpeed, setCCSpeed):
+    while(maintainingSpeed):
+        #if flat surface
+        if(surfaceAngle == 0):
+            currentVehicleSpeed -= CAR_DRAG
+            time.sleep(2)
+            #if speed drops below maintenance level, break loop and accelerate
+            if(currentVehicleSpeed < (setCCSpeed -5)):
+                maintainingSpeed = False
+                Accelerate(currentVehicleSpeed, maintainingSpeed, setCCSpeed)
+        #if downhill
+        if(surfaceAngle < 0):
+            currentVehicleSpeed += CAR_DRAG
+            time.sleep(1)
+            #if speed exceeds maintenance threshold, break loop and decelerate
+            #i know this is flawed but for now im not including instances of user braking
+            if(currentVehicleSpeed > (setCCSpeed+5)):
+                maintainingSpeed = False
+                Decelerate(currentVehicleSpeed, maintainingSpeed, setCCSpeed)
+        #if uphill
+        if(surfaceAngle > 0):
+            currentVehicleSpeed -= CAR_DRAG
+            time.sleep(1)
+            #if speed drops below maintainence threshold, break loop and accelerate
+            if(currentVehicleSpeed < (setCCSpeed -5)):
+                maintainingSpeed = False
+                Accelerate(currentVehicleSpeed, maintainingSpeed, setCCSpeed)
+
+
+
+#when the vehicle needs to accelerate, increase speed by 2km/h per second
+def Accelerate(currentVehicleSpeed, maintainingSpeed, setCCSpeed):
+    #get car back up to Cruise Control speed
+    while(currentVehicleSpeed < (setCCSpeed-5)):
+       currentVehicleSpeed += THROTTLE_RATE
+       time.sleep(1)
+    #maintaining speed is now true
+    maintainingSpeed = True
+    
+#when the vehicle needs to decelerate, reduce speed by car drag every second
+def Decelerate(currentVehicleSpeed, maintainingSpeed, setCCSpeed):
+    while(currentVehicleSpeed > (setCCSpeed+5)):
+        currentVehicleSpeed -= CAR_DRAG
+        time.sleep(2)
+    #maintaining speed is now true
+    maintainingSpeed = True
+
+
+#if CVS < setCCSpeed & SA > 0 then Maintain()
+#if CVS < setCCSpeed & SA == 0 then Maintain()
+#if CVS == setCCSpeed & SA > 0 then Maintain()
+#if CVS < setCCSpeed & SA < 0 then Maintain()
+#if CVS == setCCSpeed & SA == 0 then Maintain()
+#if CVS > setCCSpeed & SA > 0 then Maintain()
+#if CVS == setCCSpeed & SA < 0 then Maintain()
+#if CVS > setCCSpeed & SA == 0 then Maintain()
+#if CVS > setCCSpeed & SA < 0 then Maintain()

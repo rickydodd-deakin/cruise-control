@@ -8,7 +8,7 @@ CAR_DRAG = 1 #the car will lose 1km/h per tick if throttle disengaged
 #VARIABLES
 maintainingSpeed = True
 setCCSpeed = 0
-currentVehicleSpeed = 40
+currentVehicleSpeed = 40 #CC cannot engage below 40km/h
 surfaceAngle = 0
 
 

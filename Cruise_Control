@@ -2,8 +2,8 @@
 import time
 
 #CONSTANTS
-THROTTLE_RATE = 2 #creates speed change of 2km/h per second
-CAR_DRAG = 1 #the car will lose 1km/h per second if throttle disengaged
+THROTTLE_RATE = 2 #creates speed change of 2km/h per tick
+CAR_DRAG = 1 #the car will lose 1km/h per tick if throttle disengaged
 
 #VARIABLES
 maintainingSpeed = True

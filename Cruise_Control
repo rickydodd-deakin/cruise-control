@@ -70,3 +70,16 @@ def Decelerate(currentVehicleSpeed, maintainingSpeed, setCCSpeed):
 #if CVS == setCCSpeed & SA < 0 then Maintain()
 #if CVS > setCCSpeed & SA == 0 then Maintain()
 #if CVS > setCCSpeed & SA < 0 then Maintain()
+
+#IF (frontVehicle AND 40 < currentVehicleSpeed <= 50) Safe distance is 24 metres 
+#IF (frontVehicle AND 50 < currentVehicleSpeed <= 60) Safe distance is 32 metres 
+#IF (frontVehicle AND 60 < currentVehicleSpeed <= 70) Safe distance is 40 metres 
+#IF (frontVehicle AND 70 < currentVehicleSpeed <= 80) Safe distance is 52 metres 
+#IF (frontVehicle AND 80 < currentVehicleSpeed <= 90) Safe distance is 61 metres 
+#IF (frontVehicle AND 90 < currentVehicleSpeed <= 100) Safe distance is 76 metres 
+#IF (frontVehicle AND 100 < currentVehicleSpeed) Safe distance is 90 metres 
+#IF (frontVehicle AND frontVehicleDistance too small)  THEN lower setCCSpeed 
+#IF (frontVehicleDistance not too small AND setCCSpeed < original setCCSpeed) THEN restore original setCCSpeed 
+#IF (currentVehicleSpeed < setCCSpeed) THEN accelerate to setCCSpeed 
+#IF (currentVehicleSpeed > setCCSpeed) THEN decelerate to setCCSpeed 
+#IF (currentVehicleSpeed = setCCSpeed) THEN maintain setCCSpeed 

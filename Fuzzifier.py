@@ -25,3 +25,40 @@ speed['fast'] = fuzz.trapmf(speed.universe, [50, 85, 100, 100])
 change['increase'] = fuzz.smf(change.universe, 0, 100)
 change['constant'] = fuzz.trapmf(change.universe, [-50, -10, 10, 50])
 change['decrease'] = fuzz.zmf(change.universe, -100, 0)
+
+# Fuzzy rules
+rule_one        = ctrl.Rule(speed['fast'] & angle['very downhill'],      change['decrease'])
+rule_two        = ctrl.Rule(speed['fast'] & angle['downhill'],           change['decrease'])
+rule_three      = ctrl.Rule(speed['fast'] & angle['flat'],               change['constant'])
+rule_four       = ctrl.Rule(speed['fast'] & angle['uphill'],             change['increase'])
+rule_five       = ctrl.Rule(speed['fast'] & angle['very uphill'],        change['increase'])
+
+rule_six        = ctrl.Rule(speed['slow'] & angle['very downhill'],      change['decrease'])
+rule_seven      = ctrl.Rule(speed['slow'] & angle['downhill'],           change['decrease'])
+rule_eight      = ctrl.Rule(speed['slow'] & angle['flat'],               change['constant'])
+rule_nine       = ctrl.Rule(speed['slow'] & angle['uphill'],             change['increase'])
+rule_ten        = ctrl.Rule(speed['slow'] & angle['very uphill'],        change['increase'])
+
+rule_eleven     = ctrl.Rule(speed['very slow'] & angle['very downhill'], change['decrease'])
+rule_twelve     = ctrl.Rule(speed['very slow'] & angle['downhill'],      change['decrease'])
+rule_thirteen   = ctrl.Rule(speed['very slow'] & angle['flat'],          change['constant'])
+rule_fourteen   = ctrl.Rule(speed['very slow'] & angle['uphill'],        change['increase'])
+rule_fifteen    = ctrl.Rule(speed['very slow'] & angle['very uphill'],   change['increase'])
+
+# Control system
+change_ctrlsys = ctrl.ControlSystem([rule_one, rule_two, rule_three, rule_four, rule_five,
+                                    rule_six, rule_seven, rule_eight, rule_nine, rule_ten,
+                                    rule_eleven, rule_twelve, rule_thirteen, rule_fourteen, rule_fifteen])
+
+# Simulates control for a particular case, takes an angle (degrees, from -46 to 46) and speed (from 0 to 100).
+# Returns an integer value, which is how much to add to the set speed of the cruise control.
+def simulate_control(angle, speed):
+    change = ctrl.ControlSystemSimulation(change_ctrlsys)
+
+    change.input['angle'] = angle
+    change.input['speed'] = speed
+
+    change.compute()
+    return int(change.output['change'])
+
+print(simulate_control(-40, 70))

@@ -44,21 +44,3 @@ rule_twelve     = ctrl.Rule(speed['very slow'] & angle['downhill'],      change[
 rule_thirteen   = ctrl.Rule(speed['very slow'] & angle['flat'],          change['constant'])
 rule_fourteen   = ctrl.Rule(speed['very slow'] & angle['uphill'],        change['increase'])
 rule_fifteen    = ctrl.Rule(speed['very slow'] & angle['very uphill'],   change['increase'])
-
-# Control system
-change_ctrlsys = ctrl.ControlSystem([rule_one, rule_two, rule_three, rule_four, rule_five,
-                                    rule_six, rule_seven, rule_eight, rule_nine, rule_ten,
-                                    rule_eleven, rule_twelve, rule_thirteen, rule_fourteen, rule_fifteen])
-
-# Simulates control for a particular case, takes an angle (degrees, from -46 to 46) and speed (from 0 to 100).
-# Returns an integer value, which is how much to add to the set speed of the cruise control.
-def simulate_control(angle, speed):
-    change = ctrl.ControlSystemSimulation(change_ctrlsys)
-
-    change.input['angle'] = angle
-    change.input['speed'] = speed
-
-    change.compute()
-    return int(change.output['change'])
-
-print(simulate_control(-40, 70))

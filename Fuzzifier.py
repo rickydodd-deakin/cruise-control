@@ -2,6 +2,7 @@ import numpy as np
 import simpful as sf
 import skfuzzy as fuzz
 
+# Universes of discourse
 x_angle = np.arange(-46, 47, 1)
 x_speed = np.arange(-100, 101, 1)
 

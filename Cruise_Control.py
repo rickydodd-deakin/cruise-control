@@ -1,52 +1,37 @@
 #IMPORTS
 import time
+import Fuzzifier
+
 
 #CONSTANTS
 THROTTLE_RATE = 2 #creates speed change of 2km/h per tick
 CAR_DRAG = 1 #the car will lose 1km/h per tick if throttle disengaged
 
 #VARIABLES
-maintainingSpeed = True
+driving = True
+maintainingSpeed = False
 setCCSpeed = 0
 currentVehicleSpeed = 40 #CC cannot engage below 40km/h
-surfaceAngle = 0
+frontVehicle = False
+frontVehicleDistance = 0
+safedistance = 0
+#surfaceAngle = 0
 
 
 #FUNCTIONS
-def MaintainSpeed(currentVehicleSpeed, maintainingSpeed, setCCSpeed):
+#while travelling the drag of the car reduces speed by 1 km/h every 2 seconds
+#once vehicle speed is below cruise control threshold (outside 5km/h of setCCspeed break)
+def MaintainSpeed(currentVehicleSpeed, maintainingSpeed, setCCSpeed): 
     while(maintainingSpeed):
-        #if flat surface
-        if(surfaceAngle == 0):
-            currentVehicleSpeed -= CAR_DRAG
-            time.sleep(2)
-            #if speed drops below maintenance level, break loop and accelerate
-            if(currentVehicleSpeed < (setCCSpeed -5)):
-                maintainingSpeed = False
-                Accelerate(currentVehicleSpeed, maintainingSpeed, setCCSpeed)
-        #if downhill
-        if(surfaceAngle < 0):
-            currentVehicleSpeed += CAR_DRAG
-            time.sleep(1)
-            #if speed exceeds maintenance threshold, break loop and decelerate
-            #i know this is flawed but for now im not including instances of user braking
-            if(currentVehicleSpeed > (setCCSpeed+5)):
-                maintainingSpeed = False
-                Decelerate(currentVehicleSpeed, maintainingSpeed, setCCSpeed)
-        #if uphill
-        if(surfaceAngle > 0):
-            currentVehicleSpeed -= CAR_DRAG
-            time.sleep(1)
-            #if speed drops below maintainence threshold, break loop and accelerate
-            if(currentVehicleSpeed < (setCCSpeed -5)):
-                maintainingSpeed = False
-                Accelerate(currentVehicleSpeed, maintainingSpeed, setCCSpeed)
-
-
+        currentVehicleSpeed -= CAR_DRAG
+        time.sleep(2)
+        if(currentVehicleSpeed < (setCCSpeed - 5)):
+            maintainingSpeed = False
 
 #when the vehicle needs to accelerate, increase speed by 2km/h per second
 def Accelerate(currentVehicleSpeed, maintainingSpeed, setCCSpeed):
     #get car back up to Cruise Control speed
-    while(currentVehicleSpeed < (setCCSpeed-5)):
+    while(currentVehicleSpeed < setCCSpeed):
        currentVehicleSpeed += THROTTLE_RATE
        time.sleep(1)
     #maintaining speed is now true
@@ -54,11 +39,60 @@ def Accelerate(currentVehicleSpeed, maintainingSpeed, setCCSpeed):
     
 #when the vehicle needs to decelerate, reduce speed by car drag every second
 def Decelerate(currentVehicleSpeed, maintainingSpeed, setCCSpeed):
-    while(currentVehicleSpeed > (setCCSpeed+5)):
+    while(currentVehicleSpeed > setCCSpeed):
         currentVehicleSpeed -= CAR_DRAG
         time.sleep(2)
     #maintaining speed is now true
     maintainingSpeed = True
+
+def DetermineSafeDistance(frontvehicle, frontVehicleDistance, currentVehicleSpeed, setCCSpeed):
+    if(frontVehicle):
+        if(40 < currentVehicleSpeed <= 50):
+            safedistance = 24
+        if(50 < currentVehicleSpeed <= 60):
+            safedistance = 32
+        if(60 < currentVehicleSpeed <= 70):
+            safedistance = 40
+        if(70 < currentVehicleSpeed <= 80):
+            safedistance = 52
+        if(80 < currentVehicleSpeed <= 90):
+            safedistance = 61
+        if(90 < currentVehicleSpeed <= 100):
+            safedistance = 76
+        if(currentVehicleSpeed > 100):
+            safedistance = 90
+
+
+#the scenario is we are driving at 40km/h, we turn a corner and then wish to engage our cruise control
+#set cruise control
+setCCSpeed = 50
+#check for vehicle in front (lets just say there is one)
+frontVehicle = True
+#collect distance of front vehicle from our vehicle (in meters)
+frontVehicleDistance = 50
+
+while(driving):
+    #accelerate up to setCCSpeed
+    Accelerate(currentVehicleSpeed, maintainingSpeed, setCCSpeed)
+    #not sure about heavily decrease, maybe it should be cruise control disengage? because braking is not used in cruise control systems.
+    if(Fuzzifier.R1):
+        MaintainSpeed(currentVehicleSpeed, maintainingSpeed, setCCSpeed)
+    if(Fuzzifier.R2):
+        MaintainSpeed(currentVehicleSpeed, MaintainSpeed, setCCSpeed)
+    if(Fuzzifier.R3):
+        #unsure how to implement these rules.
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #if CVS < setCCSpeed & SA > 0 then Maintain()

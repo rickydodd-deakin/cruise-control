@@ -10,11 +10,11 @@ speed = ctrl.Antecedent(np.arange(0, 101, 1), 'speed')
 change = ctrl.Consequent(np.arange(-50, 51, 1), 'change')
 
 # Fuzzy membership functions for "closeness"
-closeness['very close']  = fuzz.trimf(closeness.universe, [-46, -46, -23])
-closeness['close']       = fuzz.trimf(closeness.universe, [-46, -23, 0])
-closeness['comfortable'] = fuzz.trimf(closeness.universe, [-23, 0, 23])
-closeness['far']         = fuzz.trimf(closeness.universe, [0, 23, 46])
-closeness['very far']    = fuzz.trimf(closeness.universe, [23, 46, 46])
+closeness['very close']  = fuzz.trapmf(closeness.universe, [0, 0, 25, 40])
+closeness['close']       = fuzz.trimf(closeness.universe, [10, 30, 50])
+closeness['comfortable'] = fuzz.trimf(closeness.universe, [30, 50, 70])
+closeness['far']         = fuzz.trimf(closeness.universe, [50, 70, 90])
+closeness['very far']    = fuzz.trapmf(closeness.universe, [60, 75, 100, 100])
 
 # Fuzzy membership functions for "speed"
 speed['very slow'] = fuzz.trapmf(speed.universe, [0, 0, 15, 50])

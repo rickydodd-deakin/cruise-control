@@ -1,6 +1,9 @@
+#created by Patrick Wright ID: 217530505
+
 #IMPORTS
 import time
 import Fuzzifier
+import Defuzzifier
 
 
 #CONSTANTS
@@ -15,7 +18,6 @@ currentVehicleSpeed = 40 #CC cannot engage below 40km/h
 frontVehicle = False
 frontVehicleDistance = 0
 safedistance = 0
-#surfaceAngle = 0
 
 
 #FUNCTIONS
@@ -45,24 +47,6 @@ def Decelerate(currentVehicleSpeed, maintainingSpeed, setCCSpeed):
     #maintaining speed is now true
     maintainingSpeed = True
 
-def DetermineSafeDistance(frontvehicle, frontVehicleDistance, currentVehicleSpeed, setCCSpeed):
-    if(frontVehicle):
-        if(40 < currentVehicleSpeed <= 50):
-            safedistance = 24
-        if(50 < currentVehicleSpeed <= 60):
-            safedistance = 32
-        if(60 < currentVehicleSpeed <= 70):
-            safedistance = 40
-        if(70 < currentVehicleSpeed <= 80):
-            safedistance = 52
-        if(80 < currentVehicleSpeed <= 90):
-            safedistance = 61
-        if(90 < currentVehicleSpeed <= 100):
-            safedistance = 76
-        if(currentVehicleSpeed > 100):
-            safedistance = 90
-
-
 #the scenario is we are driving at 40km/h, we turn a corner and then wish to engage our cruise control
 #set cruise control
 setCCSpeed = 50
@@ -71,17 +55,22 @@ frontVehicle = True
 #collect distance of front vehicle from our vehicle (in meters)
 frontVehicleDistance = 50
 
-while(driving):
-    #accelerate up to setCCSpeed
-    Accelerate(currentVehicleSpeed, maintainingSpeed, setCCSpeed)
-    #not sure about heavily decrease, maybe it should be cruise control disengage? because braking is not used in cruise control systems.
-    if(Fuzzifier.R1):
-        MaintainSpeed(currentVehicleSpeed, maintainingSpeed, setCCSpeed)
-    if(Fuzzifier.R2):
-        MaintainSpeed(currentVehicleSpeed, MaintainSpeed, setCCSpeed)
-    if(Fuzzifier.R3):
-        #unsure how to implement these rules.
+#driving
+#accelerate up to setCCSpeed
+Accelerate(currentVehicleSpeed, maintainingSpeed, setCCSpeed)
 
+while(driving):
+    #this stores an int which is the change of speed we need to make
+    safeSpeedCheck = Defuzzifier.Defuzzify(frontVehicleDistance, currentVehicleSpeed)
+    #if we are too close, slow down
+    if(safeSpeedCheck < 0):
+        Decelerate(currentVehicleSpeed, maintainingSpeed, setCCSpeed)
+    #if we are safe distance for our current speed, maintain
+    elif(safeSpeedCheck == 0):
+        MaintainSpeed(currentVehicleSpeed, maintainingSpeed, setCCSpeed)
+    #if we are too far away but below CCspeed, accelerate
+    elif(safeSpeedCheck > 0): 
+        Accelerate(currentVehicleSpeed, maintainingSpeed, setCCSpeed)
 
 
 

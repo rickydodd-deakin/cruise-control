@@ -18,7 +18,6 @@ currentVehicleSpeed = 40 #CC cannot engage below 40km/h
 frontVehicle = False
 frontVehicleDistance = 0
 safedistance = 0
-#surfaceAngle = 0
 
 
 #FUNCTIONS
@@ -64,13 +63,13 @@ while(driving):
     #this stores an int which is the change of speed we need to make
     safeSpeedCheck = Defuzzifier.Defuzzify(frontVehicleDistance, currentVehicleSpeed)
     #if we are too close, slow down
-    if(safeSpeedCheck < currentVehicleSpeed):
+    if(safeSpeedCheck < 0):
         Decelerate(currentVehicleSpeed, maintainingSpeed, setCCSpeed)
-    #if we are safe distance, maintain
-    elif(safeSpeedCheck == currentVehicleSpeed):
+    #if we are safe distance for our current speed, maintain
+    elif(safeSpeedCheck == 0):
         MaintainSpeed(currentVehicleSpeed, maintainingSpeed, setCCSpeed)
-    #if we are too far away, accelerate
-    elif(safeSpeedCheck > currentVehicleSpeed): 
+    #if we are too far away but below CCspeed, accelerate
+    elif(safeSpeedCheck > 0): 
         Accelerate(currentVehicleSpeed, maintainingSpeed, setCCSpeed)
 
 

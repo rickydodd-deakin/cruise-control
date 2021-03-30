@@ -4,7 +4,6 @@ from skfuzzy import control as ctrl
 import matplotlib.pyplot as plt
 
 import Fuzzifier
-import Cruise_Control
 
 '''
 Based on the tipping example in the SciKit Fuzzy docs. Available at:
@@ -110,12 +109,3 @@ cruise_sim.compute()
 #printing and creating an image of the simulation
 print('Test 8 output:', cruise_sim.output['change'], 'very far, speed is very slow condition')
 Fuzzifier.change.view(sim=cruise_sim)
-
-
-#Test 9 - 
-Cruise_Control.setCCSpeed = 60
-Cruise_Control.currentVehicleSpeed = 40
-Cruise_Control.frontVehicleDistance = 55
-print('Test 9 output:', Cruise_Control.Driving(), 'ignore this')
-
-

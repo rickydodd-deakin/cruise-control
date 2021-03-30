@@ -2,6 +2,14 @@ import numpy as np
 import skfuzzy as fuzz
 from skfuzzy import control as ctrl
 
+'''
+Based on the tipping example in the SciKit Fuzzy docs. Available at:
+https://pythonhosted.org/scikit-fuzzy/auto_examples/plot_tipping_problem.html
+https://pythonhosted.org/scikit-fuzzy/auto_examples/plot_tipping_problem_newapi.html#example-plot-tipping-problem-newapi-py
+
+Ricky Dodd 220010849
+'''
+
 # Antecedent objects, to hold universes of discourse and membership functions
 closeness = ctrl.Antecedent(np.arange(0, 101, 1), 'closeness')
 speed = ctrl.Antecedent(np.arange(0, 101, 1), 'speed')

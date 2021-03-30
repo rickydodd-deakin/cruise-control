@@ -18,7 +18,6 @@ currentVehicleSpeed = 40 #CC cannot engage below 40km/h
 frontVehicle = False
 frontVehicleDistance = 0
 safedistance = 0
-#surfaceAngle = 0
 
 
 #FUNCTIONS

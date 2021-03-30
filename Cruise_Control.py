@@ -1,3 +1,5 @@
+#created by Patrick Wright ID: 217530505
+
 #IMPORTS
 import time
 import Fuzzifier

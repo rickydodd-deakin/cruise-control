@@ -10,12 +10,8 @@ import Defuzzifier
 THROTTLE_RATE = 2 #creates speed change of 2km/h per tick
 CAR_DRAG = 1 #the car will lose 1km/h per tick if throttle disengaged
 
-#VARIABLES
-#driving = True
-#maintainingSpeed = False
 
 #FUNCTION
-
 #while travelling the drag of the car reduces speed by 1 km/h every 2 seconds
 #once vehicle speed is below cruise control threshold (outside 5km/h of setCCspeed break)
 def MaintainSpeed(currentVehicleSpeed, maintainingSpeed, setCCSpeed): 
@@ -49,28 +45,22 @@ def Decelerate(currentVehicleSpeed, maintainingSpeed, setCCSpeed):
     maintainingSpeed = True
     return currentVehicleSpeed, maintainingSpeed
 
-#check for vehicle in front (lets just say there is one)
 
 
-#driving
 def Driving(setCCSpeed, currentVehicleSpeed, frontVehicleDistance, maintainingSpeed):
-    #while(driving):
     #this stores an int which is the change of speed we need to make
     safeSpeedCheck = Defuzzifier.Defuzzify(frontVehicleDistance, currentVehicleSpeed)
     setCCSpeed = currentVehicleSpeed + safeSpeedCheck
     #if we are too close, slow down
     if(safeSpeedCheck < 0):
-    #if(currentVehicleSpeed > setCCSpeed):
         print('Decelerating')
         currentVehicleSpeed, maintainingSpeed = Decelerate(currentVehicleSpeed, maintainingSpeed, setCCSpeed)
     #if we are safe distance for our current speed, maintain
     elif(safeSpeedCheck == 0):
-    #elif(currentVehicleSpeed == setCCSpeed):
         print('Maintaining Speed')
         currentVehicleSpeed, maintainingSpeed = MaintainSpeed(currentVehicleSpeed, maintainingSpeed, setCCSpeed)
     #if we are too far away but below CCspeed, accelerate
     elif(safeSpeedCheck > 0): 
-    #elif(currentVehicleSpeed < setCCSpeed):
         print('Accelerating')
         currentVehicleSpeed, maintainingSpeed = Accelerate(currentVehicleSpeed, maintainingSpeed, setCCSpeed)
         

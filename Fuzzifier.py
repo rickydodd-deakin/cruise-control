@@ -7,6 +7,9 @@ Based on the tipping example in the SciKit Fuzzy docs. Available at:
 https://pythonhosted.org/scikit-fuzzy/auto_examples/plot_tipping_problem.html
 https://pythonhosted.org/scikit-fuzzy/auto_examples/plot_tipping_problem_newapi.html#example-plot-tipping-problem-newapi-py
 
+The purpose of this file is to define linguistic variables, their sets, universes of discourse, membership functions, and
+the fuzzy rules that relate antecedents with consequences.
+
 Ricky Dodd 220010849
 '''
 

@@ -1,4 +1,4 @@
-A private repository for the first group learning project of SIT215.
+A repository for the first group learning project of SIT215.
 
 # PBL Task 1 - Fuzzy Car Control
 

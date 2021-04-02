@@ -25,9 +25,5 @@ def cruiseControlTest(testLength):
             CruiseControl.driving = False
 
 
-
-
 #This starts a test of 30 seconds
 cruiseControlTest(30)
-#cruiseControlTest2(30)
-#cruiseControlTest3(30)

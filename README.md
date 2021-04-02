@@ -1,6 +1,19 @@
 A private repository for the first group learning project of SIT215.
 
 # PBL Task 1 - Fuzzy Car Control
+
+## Team Members
+Patrick Wright	 		217530505
+Ricky Dodd	 		220010849
+Devin Oshada Uvin Jayasinghe	220228075
+
+Task contains contributions from Hannah Smith, a former team member that resigned from the unit four days prior to completion.
+
+## How To Run
+To execute the complete system, simply run CruiseControlTester.py to run various tests on real inputs.
+TestFuzz.py and TestDefuzz.py can both be ran independently to test the fuzzifier and defuzzifier, respectively.
+FuzzySubsetVisualizations.ipynb can be ran independently to visualize the fuzzy subsets.
+
 ## Selected Intelligent Control System
 Cruise control was selected.
 

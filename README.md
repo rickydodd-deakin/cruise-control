@@ -3,9 +3,11 @@ A private repository for the first group learning project of SIT215.
 # PBL Task 1 - Fuzzy Car Control
 
 ## Team Members
-Patrick Wright	 		217530505
-Ricky Dodd	 		220010849
-Devin Oshada Uvin Jayasinghe	220228075
+Patrick Wright, Student ID: 217530505
+
+Ricky Dodd, Student ID: 220010849
+
+Devin Oshada Uvin Jayasinghe, Student ID: 220228075
 
 Task contains contributions from Hannah Smith, a former team member that resigned from the unit four days prior to completion.
 

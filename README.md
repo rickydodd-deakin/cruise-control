@@ -13,7 +13,9 @@ Task contains contributions from Hannah Smith, a former team member that resigne
 
 ## How To Run
 To execute the complete system, simply run CruiseControlTester.py to run various tests on real inputs.
+
 TestFuzz.py and TestDefuzz.py can both be ran independently to test the fuzzifier and defuzzifier, respectively.
+
 FuzzySubsetVisualizations.ipynb can be ran independently to visualize the fuzzy subsets.
 
 ## Selected Intelligent Control System

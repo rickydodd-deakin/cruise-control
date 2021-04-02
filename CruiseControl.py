@@ -26,22 +26,20 @@ def MaintainSpeed(currentVehicleSpeed, maintainingSpeed, setCCSpeed):
 
 #when the vehicle needs to accelerate, increase speed by 2km/h per second
 def Accelerate(currentVehicleSpeed, maintainingSpeed, setCCSpeed):
-    #get car back up to Cruise Control speed
+    #get car back up to Cruise Control speed and return to maintaining speed
     while(currentVehicleSpeed < setCCSpeed):
        currentVehicleSpeed += THROTTLE_RATE
        time.sleep(1)
-    #maintaining speed is now true
     maintainingSpeed = True
     return currentVehicleSpeed, maintainingSpeed
 
     
     
-#when the vehicle needs to decelerate, reduce speed by car drag every second
+#reduce speed by car drag every second until setCCSpeed is reached, then return to maintaining speed
 def Decelerate(currentVehicleSpeed, maintainingSpeed, setCCSpeed):
     while(currentVehicleSpeed > setCCSpeed):
         currentVehicleSpeed -= CAR_DRAG
         time.sleep(2)
-    #maintaining speed is now true
     maintainingSpeed = True
     return currentVehicleSpeed, maintainingSpeed
 
@@ -55,7 +53,7 @@ def Driving(setCCSpeed, currentVehicleSpeed, frontVehicleDistance, maintainingSp
     if(safeSpeedCheck < 0):
         print('Decelerating')
         currentVehicleSpeed, maintainingSpeed = Decelerate(currentVehicleSpeed, maintainingSpeed, setCCSpeed)
-    #if we are safe distance for our current speed, maintain
+    #if we are safe distance for our current speed, maintain it
     elif(safeSpeedCheck == 0):
         print('Maintaining Speed')
         currentVehicleSpeed, maintainingSpeed = MaintainSpeed(currentVehicleSpeed, maintainingSpeed, setCCSpeed)

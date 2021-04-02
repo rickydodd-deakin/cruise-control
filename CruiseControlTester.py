@@ -25,40 +25,9 @@ def cruiseControlTest(testLength):
             CruiseControl.driving = False
 
 
-def cruiseControlTest2(testLength):
-    startTime = time.time()
-    
-    CruiseControl.driving = True
-    maintainingSpeed = False
-    setCCSpeed = 50
-    currentVehicleSpeed = 70
-    frontVehicleDistance = 60
 
-    print("Beginning test of {0} seconds".format(testLength))
-    while (CruiseControl.driving):
-        setCCSpeed, currentVehicleSpeed, maintainingSpeed = CruiseControl.Driving(setCCSpeed, currentVehicleSpeed, frontVehicleDistance, maintainingSpeed)
-        print("Set speed is {0}, current vehicle speed is {1}kph, front vehicle is {2}m away".format(setCCSpeed, currentVehicleSpeed, frontVehicleDistance))
-        if (time.time() > startTime + testLength):
-            CruiseControl.driving = False
-
-
-def cruiseControlTest3(testLength):
-    startTime = time.time()
-    
-    CruiseControl.driving = True
-    maintainingSpeed = False
-    setCCSpeed = 80
-    currentVehicleSpeed = 80
-    frontVehicleDistance = 90
-
-    print("Beginning test of {0} seconds".format(testLength))
-    while (CruiseControl.driving):
-        setCCSpeed, currentVehicleSpeed, maintainingSpeed = CruiseControl.Driving(setCCSpeed, currentVehicleSpeed, frontVehicleDistance, maintainingSpeed)
-        print("Set speed is {0}, current vehicle speed is {1}kph, front vehicle is {2}m away".format(setCCSpeed, currentVehicleSpeed, frontVehicleDistance))
-        if (time.time() > startTime + testLength):
-            CruiseControl.driving = False
 
 #This starts a test of 30 seconds
-#cruiseControlTest(30)
+cruiseControlTest(30)
 #cruiseControlTest2(30)
 #cruiseControlTest3(30)
